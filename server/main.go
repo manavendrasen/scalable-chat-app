@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -9,8 +10,15 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/go-redis/redis/v8"
 	"github.com/gorilla/websocket"
 )
+
+var rdb = redis.NewClient(&redis.Options{
+	Addr: "localhost:6379",
+})
+
+var ctx = context.Background()
 
 
 const (
@@ -79,6 +87,9 @@ func (c *Client) reader() {
 		// text cleanup
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
 		log.Println("INCOMING MESSAGE:", string(message))
+		if err := rdb.Publish(ctx, "CHAT", message).Err(); err != nil {
+			panic(err)
+		}
 		c.hub.broadcast <- message
 	}
 }
@@ -95,6 +106,9 @@ func (c *Client) writer() {
 		ticker.Stop()
 		c.conn.Close()
 	}()
+	
+	pubsub := rdb.Subscribe(ctx, "CHAT")
+  defer pubsub.Close()
 	
 	for {
 		select {
@@ -130,7 +144,22 @@ func (c *Client) writer() {
 			if err := c.conn.WriteMessage(websocket.PingMessage, nil); err != nil {
 				return
 			}
+
+		case message, ok := <-pubsub.Channel():
+			if !ok {
+					return
+			}
+			c.conn.SetWriteDeadline(time.Now().Add(writeWait))
+			w, err := c.conn.NextWriter(websocket.TextMessage)
+			if err != nil {
+					return
+			}
+			w.Write([]byte(message.Payload))
+			if err := w.Close(); err != nil {
+					return
+			}
 		}
+		
 	}
 }
 
