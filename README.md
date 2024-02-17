@@ -59,22 +59,9 @@ This Proof of Concept (POC) project demonstrates the scaling capabilities of a W
     kubectl get pods
     ```
 
-## Testing
-
-Get Minikube service url
-
-```bash
-minikube service chat-app-service
-```
-
-Copy the url and open postman to connect to the websocket ws://<host>:<port>/ws
-
-![image](https://github.com/manavendrasen/scalable-chat-app/assets/26283488/f3c6fc93-6e7e-4cea-b96b-cf4fec5332d3)
-
-
 ## Project Structure
 
-- `server/`: Contains the Golang WebSocket server code.
+- `main.go`: Contains the Golang WebSocket server code.
 - `Dockerfile`: Dockerfile for containerization.
 - `k8.yaml`: Kubernetes deployment files.
 - `README.md`: Documentation.
@@ -109,7 +96,17 @@ Redis is added to the Minikube deployment to support the Pub/Sub functionality. 
 ## Usage
 
 - Connect to the WebSocket server using your preferred WebSocket client, specifying the LoadBalancer service IP.
-- To send a message to all connected clients, publish a message to the specified Redis channel.
+
+For local testing -
+Get Minikube service url
+
+```bash
+minikube service chat-app-service
+```
+
+Copy the url and open postman to connect to the websocket ws://host:port/ws
+![image](https://github.com/manavendrasen/scalable-chat-app/assets/26283488/f3c6fc93-6e7e-4cea-b96b-cf4fec5332d3)
+
 
 ## Cleanup
 
