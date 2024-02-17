@@ -122,3 +122,7 @@ minikube delete
 ## Conclusion
 
 This project demonstrates the scalability and real-time communication capabilities of a WebSocket server in a containerized and Minikube Kubernetes environment, with the added benefit of Redis Pub/Sub for efficient message broadcasting. Feel free to explore and extend the project for your specific use cases. This is just a POC to test if this was possible, do not use this in prod :).
+
+## References
+- [Scaling Websockets with Redis, HAProxy and Node JS - High-availability Group Chat Application](https://youtu.be/gzIcGhJC8hA)
+- [Build Scaleable Realtime Chat App with NextJS and NodeJS Tutorial](https://youtu.be/CQQc8QyIGl0)
