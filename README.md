@@ -61,11 +61,14 @@ This Proof of Concept (POC) project demonstrates the scaling capabilities of a W
 
 Get Minikube service url
 
-	```bash
-	minikube service chat-app-service
-	```
+```bash
+minikube service chat-app-service
+```
 
 Copy the url and open postman to connect to the websocket ws://<host>:<port>/ws
+
+![image](https://github.com/manavendrasen/scalable-chat-app/assets/26283488/f3c6fc93-6e7e-4cea-b96b-cf4fec5332d3)
+
 
 ## Project Structure
 
@@ -91,6 +94,11 @@ The WebSocket server is deployed on Minikube with three replicas and a LoadBalan
 ### 4. Redis Pub/Sub
 
 Redis Pub/Sub is integrated to enable broadcasting messages on a specific channel. This feature enhances real-time communication across WebSocket server instances.
+Without redis all the pods were independent and Clients connected to different pods could not connect to each other.
+
+![Untitled](https://github.com/manavendrasen/scalable-chat-app/assets/26283488/f8c3832f-b575-4a18-b658-879a27361acc)
+
+Redis acts as a store for chats.
 
 ### 5. Redis Integration in Kubernetes
 
@@ -113,4 +121,4 @@ minikube delete
 
 ## Conclusion
 
-This project demonstrates the scalability and real-time communication capabilities of a WebSocket server in a containerized and Minikube Kubernetes environment, with the added benefit of Redis Pub/Sub for efficient message broadcasting. Feel free to explore and extend the project for your specific use cases.
+This project demonstrates the scalability and real-time communication capabilities of a WebSocket server in a containerized and Minikube Kubernetes environment, with the added benefit of Redis Pub/Sub for efficient message broadcasting. Feel free to explore and extend the project for your specific use cases. This is just a POC to test if this was possible, do not use this in prod :).
