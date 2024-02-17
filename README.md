@@ -4,6 +4,8 @@
 
 This Proof of Concept (POC) project demonstrates the scaling capabilities of a WebSocket server implemented in Golang, utilizing the Gorilla WebSocket library. The project includes containerization with Docker and deployment on Kubernetes with features like load balancing, preventing direct client communication, and integrating Redis Pub/Sub for efficient message broadcasting.
 
+![image](https://github.com/manavendrasen/scalable-chat-app/assets/26283488/e666eee7-270f-40ad-b049-0009c16c0d8e)
+
 ## Prerequisites
 
 - Golang installed on your machine
